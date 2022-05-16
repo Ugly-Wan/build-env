@@ -12,7 +12,8 @@ RUN apk add --update --no-cache \
     sshpass \
     openssh-client \
     openssl \
-    ca-certificates
+    ca-certificates \
+    yq
 
 RUN python3 -m ensurepip &&\
     pip3 install --no-cache --upgrade pip setuptools && \
@@ -80,5 +81,6 @@ RUN unzip ${PACKER_DEST}/${PACKER_ZIPFILE} -d ${PACKER_DEST} && \
 
 USER appuser
 
+RUN ansible-galaxy collection install onepassword.connect
 
 ENTRYPOINT [ "bash" ]
