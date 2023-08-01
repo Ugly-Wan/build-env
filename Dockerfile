@@ -3,6 +3,9 @@ FROM alpine:3.15
 ARG TF_VER=1.1.9
 ARG HOME_DIR=/home/appuser
 
+ARG UID=1000
+ARG GID=1000
+
 RUN apk add --update --no-cache \
     shadow \
     bash \
@@ -25,7 +28,7 @@ RUN python3 -m ensurepip &&\
 RUN apk add --no-cache --virtual .build-deps \
     gcc
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup -s /bin/bash
+RUN addgroup -S appgroup --gid $GID && adduser --uid $UID -S appuser -G appgroup -s /bin/bash
 
 USER appuser
 
